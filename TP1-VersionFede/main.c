@@ -5,10 +5,10 @@ bool esHexa(char palabra[21], short counter){
     for(short i = 2; i < counter; i++) {
         char ch = palabra[i];
         if(!(ch >= 65 && ch <= 70) && !(ch >= 97 && ch <= 102) && !(ch >= 48 && ch <= 57)) {
-            return 0;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 bool esOctal(char palabra[21], short counter) {
@@ -38,38 +38,36 @@ void imprimirPalabra(char palabra[21], short counter) {
 }
 
 void clasificar(char palabra[21], FILE *pFile, short counter) {
-    imprimirPalabra(palabra, counter);
-    printf(" ");
     switch(palabra[0]) {
         case '0':
             if((palabra[1] == 'x' || palabra[1] == 'X') && counter > 1) {
                 if(esHexa(palabra, counter)) {
-                    char word[13] = " HEXADECIMAL\n";
+                    char mensaje[13] = " HEXADECIMAL\n";
                     fwrite(palabra, sizeof(char), (sizeof(char) * counter), pFile);
-                    fwrite(word, sizeof(char), sizeof(word), pFile);
+                    fwrite(mensaje, sizeof(char), sizeof(mensaje), pFile);
                     break;
                 }
             } 
             if(esOctal(palabra, counter)) {
-                char word[7] = " OCTAL\n";
+                char mensaje[7] = " OCTAL\n";
                 fwrite(palabra, sizeof(char), (sizeof(char) * counter), pFile);
-                fwrite(word, sizeof(char), sizeof(word), pFile);
+                fwrite(mensaje, sizeof(char), sizeof(mensaje), pFile);
                 break;
             }
-            char word[15] = " NO RECONOCIDA\n";
+            char mensaje[15] = " NO RECONOCIDA\n";
             fwrite(palabra, sizeof(char), (sizeof(char) * counter), pFile);
-            fwrite(word, sizeof(char), sizeof(word), pFile);
+            fwrite(mensaje, sizeof(char), sizeof(mensaje), pFile);
             break;
         default:
             if(esDecimal(palabra, counter)) {
-                char word[9] = " DECIMAL\n";
+                char mensaje[9] = " DECIMAL\n";
                 fwrite(palabra, sizeof(char), (sizeof(char) * counter), pFile);
-                fwrite(word, sizeof(char), sizeof(word), pFile);
+                fwrite(mensaje, sizeof(char), sizeof(mensaje), pFile);
                 break;
             } else {
-                char word[15] = " NO RECONOCIDA\n";
+                char mensaje[15] = " NO RECONOCIDA\n";
                 fwrite(palabra, sizeof(char), (sizeof(char) * counter), pFile);
-                fwrite(word, sizeof(char), sizeof(word), pFile);
+                fwrite(mensaje, sizeof(char), sizeof(mensaje), pFile);
             }
     }
 }
@@ -88,7 +86,7 @@ void leer(FILE *stream, FILE *pFile) {
         word[counter] = ch;
         counter++;
     }
-    clasificar(word, pFile, counter);
+    clasificar(word, pFile, counter); // Incluyo la última palabra, que quedó en el buffer
 }
 
 int main() {
