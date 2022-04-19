@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool esHexa(char palabra[21], short counter){
+#define longPalabra 31
+
+bool esHexa(char palabra[longPalabra], short counter){
     for(short i = 2; i < counter; i++) {
         char ch = palabra[i];
         if(!(ch >= 65 && ch <= 70) && !(ch >= 97 && ch <= 102) && !(ch >= 48 && ch <= 57)) {
@@ -11,7 +13,7 @@ bool esHexa(char palabra[21], short counter){
     return true;
 }
 
-bool esOctal(char palabra[21], short counter) {
+bool esOctal(char palabra[longPalabra], short counter) {
     for(short i = 0; i < counter; i++) {
         char ch = palabra[i];
         if(!(ch >= 48 && ch <= 55)) {
@@ -21,7 +23,7 @@ bool esOctal(char palabra[21], short counter) {
     return true;
 }
 
-bool esDecimal(char palabra[21], short counter) {
+bool esDecimal(char palabra[longPalabra], short counter) {
     for(short i = 0; i < counter; i++) {
         char ch = palabra[i];
         if(!(ch >= 48 && ch <= 57)) {
@@ -31,13 +33,13 @@ bool esDecimal(char palabra[21], short counter) {
     return true;
 }
 
-void imprimirPalabra(char palabra[21], short counter) {
+void imprimirPalabra(char palabra[longPalabra], short counter) {
     for(short i = 0; i < counter; i++) {
         printf("%c", palabra[i]);
     }
 }
 
-void clasificar(char palabra[21], FILE *pFile, short counter) {
+void clasificar(char palabra[longPalabra], FILE *pFile, short counter) {
     switch(palabra[0]) {
         case '0':
             if((palabra[1] == 'x' || palabra[1] == 'X') && counter > 1) {
@@ -74,14 +76,14 @@ void clasificar(char palabra[21], FILE *pFile, short counter) {
 
 void leer(FILE *stream, FILE *pFile) {
     char ch;
-    char word[21];
+    char word[longPalabra];
     short counter = 0;
     while((ch = fgetc(stream)) != EOF) {
         if(ch == ',') {
             clasificar(word, pFile, counter);
             counter = 0;
             ch = fgetc(stream); // Salteo el centinela
-            char word[21];
+            char word[longPalabra];
         }
         word[counter] = ch;
         counter++;
