@@ -55,9 +55,7 @@ int clasificar(char palabra[longPalabra], short counter) {
     return estado;
 }
 
-void escribeResultado(char palabra[longPalabra], FILE *pFile, int estado, short counter) {
-    imprimirPalabra(palabra, counter);
-    printf(" Estado: %d | ", estado);
+void escribeSalida(char palabra[longPalabra], FILE *pFile, int estado, short counter) {
     if(estado == 1 || estado == 2 || estado == 4 || estado == 5) {
         if(estado == 1 || estado == 5) {
             char mensaje[7] = " OCTAL\n";
@@ -86,7 +84,7 @@ void leer(FILE *stream, FILE *pFile) {
     while((ch = fgetc(stream)) != EOF) {
         if(ch == ',') {
             int estado = clasificar(word, counter);
-            escribeResultado(word, pFile, estado, counter);
+            escribeSalida(word, pFile, estado, counter);
             char word[longPalabra];
             ch = fgetc(stream); // Salteo el centinela
             counter = 0;
