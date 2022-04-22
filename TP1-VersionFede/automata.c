@@ -1,3 +1,9 @@
+/*
+Aclaración para quien esté corrigiendo el TP: Usamos if's anidados porque el switch...case estaba dando problemas con:
+    1. Declaraciones de variables dentro de los "case"
+    2. Invocaciones a funciones dentro de los "case"
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -32,8 +38,6 @@ char enRango(char base, char top, char ch) {
 int clasificar(char palabra[longPalabra], short counter) {
     int estado = estadoInicial;
     for(short i = 0; i < counter; i++) {
-        if(estado == 6)
-            break;
         char ch = palabra[i];
         if(ch == '0')
             estado = matrizTransicion[estado][0];
@@ -45,6 +49,8 @@ int clasificar(char palabra[longPalabra], short counter) {
             estado = matrizTransicion[estado][3];
         if(ch == 'x' || ch == 'X')
             estado = matrizTransicion[estado][4];
+        if(estado == 6)
+            break;
     }
     return estado;
 }
@@ -92,10 +98,10 @@ void leer(FILE *stream, FILE *pFile) {
 }
 
 short main() {
-    FILE *archivo = fopen("entrada.txt", "r");
-    FILE *pFile = fopen("salida.txt", "w");
-    leer(archivo, pFile);
-    fclose(archivo);
-    fclose(pFile);
+    FILE *ENTRADA = fopen("entrada.txt", "r");
+    FILE *SALIDA = fopen("salida.txt", "w");
+    leer(ENTRADA, SALIDA);
+    fclose(ENTRADA);
+    fclose(SALIDA);
     return 1;
 }
