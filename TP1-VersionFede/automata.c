@@ -19,8 +19,6 @@ short matrizTransicion[6][5] = {
     {5, 5, 6, 6, 6}
 };
 
-short estadosFinales[5] = {1, 2, 4, 5};
-
 void imprimirPalabra(char palabra[longPalabra], short counter) {
     for(short i = 0; i < counter; i++) {
         printf("%c", palabra[i]);
