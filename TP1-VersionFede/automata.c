@@ -33,8 +33,8 @@ char enRango(char base, char top, char ch) {
     }
 }
 
-int clasificar(char palabra[longPalabra], short counter) {
-    int estado = estadoInicial;
+short clasificar(char palabra[longPalabra], short counter) {
+    short estado = estadoInicial;
     for(short i = 0; i < counter; i++) {
         char ch = palabra[i];
         if(ch == '0')
@@ -53,7 +53,7 @@ int clasificar(char palabra[longPalabra], short counter) {
     return estado;
 }
 
-void escribeSalida(char palabra[longPalabra], FILE *pFile, int estado, short counter) {
+void escribeSalida(char palabra[longPalabra], FILE *pFile, short estado, short counter) {
     if(estado == 1 || estado == 2 || estado == 4 || estado == 5) {
         if(estado == 1 || estado == 5) {
             char mensaje[7] = " OCTAL\n";
@@ -81,7 +81,7 @@ void leer(FILE *stream, FILE *pFile) {
     short counter = 0;
     while((ch = fgetc(stream)) != EOF) {
         if(ch == ',') {
-            int estado = clasificar(word, counter);
+            short estado = clasificar(word, counter);
             escribeSalida(word, pFile, estado, counter);
             char word[longPalabra];
             ch = fgetc(stream); // Salteo el centinela
