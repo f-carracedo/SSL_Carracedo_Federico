@@ -90,7 +90,8 @@ void leer(FILE *stream, FILE *pFile) {
         word[counter] = ch;
         counter++;
     }
-    short result = clasificar(word, counter); // Incluyo la última palabra, que quedó en el buffer
+    short estado = clasificar(word, counter); // Incluyo la última palabra, que quedó en el buffer
+    escribeSalida(word, pFile, estado, counter);
 }
 
 short main() {
